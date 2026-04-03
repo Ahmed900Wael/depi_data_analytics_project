@@ -1,0 +1,7 @@
+#wp-admin-bar-wp-logo {
+    display: none;
+}
+
+#adminmenu, #adminmenu, #adminmenuback, #adminmenuwrap, #wpadminbar {
+    background-color: #29398c;
+}

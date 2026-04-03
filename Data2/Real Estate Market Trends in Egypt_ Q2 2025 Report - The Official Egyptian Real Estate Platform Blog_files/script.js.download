@@ -1,0 +1,134 @@
+document.addEventListener('DOMContentLoaded', function () {
+  const compoundName = typeof window !== "undefined" && typeof window.CPC_COMPOUND_NAME !== "undefined" ? window.CPC_COMPOUND_NAME : "";
+  let currentLang = "en";
+
+  if (typeof window.wpml_current_language !== "undefined") {
+    currentLang = window.wpml_current_language;
+  } else {
+    const htmlLang = document.documentElement.lang;
+    if (htmlLang === "ar") currentLang = "ar";
+  }
+
+  const baseApiUrl = 'https://api.realestate.gov.eg/api/v1/market-place/property/get-random-properties';
+
+  const fetchProperties = (compound = "") => {
+    const apiUrl = compound ?
+      `${baseApiUrl}?compound_name=${encodeURIComponent(compound)}` :
+      baseApiUrl;
+
+    return fetch(apiUrl, {
+        headers: {
+          'Accept-Language': currentLang
+        }
+      })
+      .then(res => res.json())
+      .then(data => Array.isArray(data.data) ? data.data : [])
+      .catch(err => {
+        console.error('Failed to load properties:', err);
+        return [];
+      });
+  };
+
+  fetchProperties(compoundName).then(mainProperties => {
+    const needed = 6 - mainProperties.length;
+
+    if (needed > 0) {
+      fetchProperties().then(extraProperties => {
+        const mainIds = new Set(mainProperties.map(p => p.id));
+        const filteredExtra = extraProperties.filter(p => !mainIds.has(p.id)).slice(0, needed);
+        const finalProps = mainProperties.concat(filteredExtra);
+        renderProperties(finalProps);
+      });
+    } else {
+      renderProperties(mainProperties.slice(0, 6));
+    }
+  });
+
+  function renderProperties(properties) {
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      properties.forEach((p, i) => {
+        const slide = document.getElementById(`mobile-slide-${i + 1}`);
+        if (slide) slide.innerHTML = generateCardHTML(p, false);
+      });
+    } else {
+      const firstSlide = document.getElementById('desktop-slide-1');
+      const secondSlide = document.getElementById('desktop-slide-2');
+      if (firstSlide && secondSlide) {
+        properties.slice(0, 3).forEach(p => {
+          firstSlide.innerHTML += generateCardHTML(p, true);
+        });
+        properties.slice(3, 6).forEach(p => {
+          secondSlide.innerHTML += generateCardHTML(p, true);
+        });
+      }
+    }
+  }
+
+  function generateCardHTML(p, isDesktop) {
+    const title = p.name || 'No Title';
+    const img = (Array.isArray(p.images) && p.images.length > 0) ? p.images[0] : 'https://dummyimage.com/400x200/cccccc/000000&text=No+Image';
+    const price = p.price ? `${p.price.toLocaleString()} EGP` : 'N/A';
+    const area = p.sqft || 'N/A';
+    const beds = (p.bedroomCount !== undefined && p.bedroomCount !== null) ? p.bedroomCount : 'N/A';
+    const baths = (p.bathroomCount !== undefined && p.bathroomCount !== null) ? p.bathroomCount : 'N/A';
+
+    const mls = p.id || 'N/A';
+    const address = p.address || '';
+
+    let detailsUrl = '#';
+    try {
+      const originalUrl = new URL(p.url);
+      const cleanPath = originalUrl.pathname.replace(/^\/(en|ar)\//, '');
+      const langPrefix = (currentLang === 'ar') ? '/ar/' : '';
+      detailsUrl = `https://realestate.gov.eg${langPrefix}${cleanPath}`;
+    } catch (e) {
+      detailsUrl = '#';
+    }
+
+    const colClass = isDesktop ? 'col-md-4' : 'col-12';
+
+    return `
+      <div class="${colClass} position-relative">
+        <a href="${detailsUrl}" target="_blank" style="text-decoration: none; color: inherit;">
+          <div class="card mb-4 shadow-sm position-relative">
+            <div class="property-card-header">
+              <div class="left-icons">
+                <img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/arrow-data-transfer-diagonal-sharp.svg" alt="Compare">
+                <span class="compare-text">Compare</span>
+              </div>
+              <div class="right-icons">
+                <img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/favourite.svg" alt="Fav">
+                <img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/link-forward.svg" alt="Link">
+              </div>
+            </div>
+            <img src="${img}" class="card-img-top" alt="${title}">
+            <div class="card-body">
+              <h5 class="card-title">${title}</h5>
+              <p class="card-text text-muted">${address}</p>
+              <p><strong>MLS ID</strong>: <span class="mls-id">${mls}</span></p>
+              <div class="d-flex text-muted mb-2 pro-feat" style="align-items: center;">
+                <small><img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/align-selection-1.svg" alt="align"> SqM ${area}</small>
+                <small><img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/bed-single-01.svg" alt="bed"> Beds ${beds}</small>
+                <small><img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/elements-1.svg" alt="elements"> Bath ${baths}</small>
+              </div>
+              <p class="fw-bold price">${price}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="schedule-tour-btn">
+                  <img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/calendar-03.svg" alt="icon">
+                  <span>Schedule a Tour</span>
+                </div>
+                <div class="cta-all">
+                  <span><img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/message-01.svg" alt="message"></span>
+                  <span><img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/elements.svg" alt="elements"></span>
+                  <span><img src="https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/call.svg" alt="call"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    `;
+  }
+});

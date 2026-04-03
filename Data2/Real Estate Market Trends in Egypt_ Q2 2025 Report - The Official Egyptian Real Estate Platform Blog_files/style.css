@@ -1,0 +1,203 @@
+#slider-re .property-card-header {
+  position: absolute;
+  top: 25px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+  padding: 0 15px;
+}
+
+#slider-re .property-card-header .left-icons,
+#slider-re .property-card-header .right-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#slider-re .property-card-header .left-icons {
+  background-color: #fff;
+  padding: 8px 16px;
+  border-radius: 16px;
+}
+
+#slider-re .property-card-header .right-icons img {
+  background: #00000033;
+  border-radius: 30px;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+#slider-re .card.mb-4.shadow-sm.position-relative {
+  padding: 15px;
+  border-radius: 30px;
+  border: 0;
+
+  box-shadow: 0 4px 26px 0 #42474c14;
+}
+
+#slider-re .property-card-header img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+#slider-re .property-card-header .compare-text {
+  font-size: 12px;
+  color: #333;
+  font-weight: 500;
+}
+
+#slider-re img.card-img-top {
+  border-radius: 20px;
+  height: 280px !important;
+  object-fit: cover;
+}
+
+#slider-re .featured {
+  background-color: #B2901C;
+  width: 104px;
+  height: 28px;
+  padding: 4px 10px;
+  display: inline-flex;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 17px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+#slider-re .featured img {
+  width: 15px;
+}
+
+#slider-re .card-body {
+  padding: 16px 0;
+}
+
+#slider-re h5.card-title {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 26px;
+  color: #000;
+  padding-top: 7px;
+}
+
+#slider-re p.card-text.text-muted {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #415466 !important;
+}
+
+#slider-re span.mls-id {
+  color: #EC1C24;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+#slider-re p.fw-bold.price {
+  font-size: 24px;
+  font-weight: 700 !important;
+  color: #000;
+  line-height: 26px;
+}
+
+#slider-re .schedule-tour-btn {
+  background-color: #EC1C24 !important;
+  color: #fff !important;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 13px !important;
+  line-height: 16px !important;
+  width: 60% !important;
+  justify-content: center !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+#slider-re .schedule-tour-btn img {
+  padding-right: 8px !important;
+  width: 15% !important;
+}
+
+#slider-re span.btn.btn-sm.rounded-pill {
+  color: #fff !important;
+}
+
+#slider-re .cta-all {
+  margin-left: 5px;
+}
+
+#slider-re .cta-all span {
+  padding: 10px !important;
+  background-color: #E8EBF180 !important;
+  border-radius: 30px !important;
+  width: 30% !important;
+  display: inline-flex;
+  align-content: center;
+  justify-content: center;
+}
+
+#slider-re .cta-all img {
+  width: 95% !important;
+}
+
+#slider-re .pro-feat img {
+  margin-top: -5px !important;
+}
+
+#slider-re small {
+  padding-right: 20px !important;
+}
+
+#slider-re .carousel-control-prev-icon,
+#slider-re .carousel-control-next-icon {
+  position: absolute !important;
+  padding: 20px !important;
+  background-color: #ffffff !important;
+  border-radius: 30px !important;
+  width: 35px !important;
+  border: #DEE6F0 solid 1px !important;
+}
+
+#slider-re .carousel-control-next,
+#slider-re .carousel-control-prev {
+  width: 3% !important;
+}
+
+#slider-re .carousel-control-prev-icon {
+  left: -50px !important;
+  background-image: url(https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/arrow-left-5-svgrepo-com.svg) !important;
+}
+
+#slider-re .carousel-control-next-icon {
+  right: -50px !important;
+  background-image: url(https://blogs.realestate.gov.eg/wp-content/uploads/2025/06/right-arrow-svgrepo-com.svg) !important;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+
+  #slider-re .carousel-control-next,
+  #slider-re .carousel-control-prev {
+    display: none;
+  }
+}
+
+#slider-re button,
+#slider-re [type=submit]:hover,
+#slider-re [type=button]:hover {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+div#slider-re {
+  direction: ltr !important;
+}
