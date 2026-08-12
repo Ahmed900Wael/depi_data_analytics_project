@@ -1,3 +1,5 @@
+![Project Screenshot](./infographic.png)
+
 # 🏙️ Mapping Real Estate in Egypt
 
 > A data-driven analysis project comparing real estate investment opportunities in **New Cairo** vs. the **New Administrative Capital** — built as a DEPI Graduation Project by Team 3: Data Wizards.
